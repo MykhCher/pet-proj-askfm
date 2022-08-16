@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="", method="GET">
+    <input type="text" name="search" class='ui input'>
+    <div>
+        <input type="submit" value="Search" class='ui button'>
+    </div>
+</form>
+<div class="ui two column centered grid">
+    <div class="four column centered row">
+        <div class="column">
+            {% if not page_obj %}
+            There are no questions yet
+            {% endif %}
+          
+              {% for quest in page_obj %}
+                <div class='ui card'>
+                    <div class='content'>
+                        <h4 class='ui sub header'>Question from 
+                            <a href='{% url 'check_profile' quest.author.id %}'>
+                            {{quest.author}}
+                            </a></h4>
+                    </div>
+                    <div class='content'>
+                        <div class="ui small feed">
+                            <div class="event">
+                                <div class="content">
+                                    <div class="summary">
+                                      {{quest.body|slice:50}} <a href={% url 'quest_detail' quest.pk %}>Answer the question</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <br />
+                  <br />  
+              {% endfor %}
+        </div>
+    </div>
+  </div>
+  <div class='ui two column centered grid'>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class='ui button'>&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class='ui button'>previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class='ui button'>next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class='ui button'>last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+{% endblock content %}

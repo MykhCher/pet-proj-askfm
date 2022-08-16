@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class='ui four column centered grid'>
+        <div class='column'>
+            <div><h3>{{profile.email}}</h3></div>
+            <br/>
+            <div>First name: {{profile.first_name}}</div>
+            <div>Last name: {{profile.last_name}}</div>
+            <div>Birth date: {{profile.birth_date}}</div>
+            <div>Occupation: {{profile.town}}</div>
+        </div>
+        <div class='column'>
+            <div>
+                <div>
+                {% if request.user.id == profile.id %}
+                    <a href='{% url 'edit_profile' %}' class='ui primary button'>
+                        Edit profile
+                    </a>
+                {% else %}
+                    <a href='{% url 'quest_create' profile.id %}' class='ui primary button'>
+                        Ask a question to {{profile.first_name}}
+                    </a>
+                {% endif %}
+                </div>
+                <br/>
+                <div>
+                    <a href='#' class='ui button'>
+                        List of {{profile.first_name}}'s answers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

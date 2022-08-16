@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="{% static 'logo/images.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% block title %}
+    <title>
+        Ask.fm
+    </title>
+    {% endblock title %}
+    <style>
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+
+        #footer{
+            bottom: 0;
+            box-shadow: 0 50vh 0 50vh rgba(0,0,0,.87);
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% block content %}
+    <p>Welcome to Ask.fm site! </p>
+    
+    {% endblock content %}
+    <br/>
+    <br/>
+    <br/>
+    {% include 'footer.html' %}
+    
+</body>
+</html>

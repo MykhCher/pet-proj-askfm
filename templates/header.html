@@ -1,0 +1,29 @@
+{% load static %}
+<div class="ui menu">
+    <div class='ui container'>
+        <a href={% url 'home' %}>
+            <img src={% static 'logo/favicon.png' %}>
+        </a>
+        <div class='right item'>
+            {% if request.user.is_authenticated %}
+                <div class="ui compact menu">
+                    <div class="ui simple dropdown item">
+                    {{request.user.email}}
+                    <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a class='item' href='{% url 'edit_profile' %}'>Edit profile</a>
+                            <a class='item' href='{% url 'check_profile' request.user.pk %}'>Check profile</a>
+                            <a class='item' href='{% url 'quest_list' request.user.pk %}'>Questions to you</a>
+                            <a class='item' href='{% url 'logout' %}'><div class="ui red empty circular label"></div>Sign out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <a class='ui button' href={% url 'login' %}>Login</a>
+                <a class='ui button'href={% url 'register' %}>Register</a>
+            {% endif %}
+        </div>
+
+  </div>
+</div>

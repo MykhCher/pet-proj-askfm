@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h3>{{request.user.email}} profile edition</h3>
+</div>
+<div class='ui two column centered grid'>
+    <form method='POST'>
+        {% csrf_token %}
+        <div>
+            <p>First name:</p>
+            {{form.first_name}}
+        <div>
+        <div>
+            <p>Last name:</p>
+            {{form.last_name}}
+        <div>
+        <div>
+            <p>Occupation:</p>
+            {{form.town}}
+        <div>
+        <div>
+            <p>Birth date:</p>
+            {{form.birth_date}}
+        <div>
+            <br/>
+            
+        <div>
+        <input class='ui button' type='submit' value='Submit'>
+        <div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Ask a question</title>
+{% endblock title %}
+{% block content %}
+{% if adressant.pk == request.user.pk %}
+<div class = 'ui two column centered grid'>
+    You can't ask questions to yourself. At least on this site
+</div>
+{% else %}
+<div class = 'ui two column centered grid'>
+    <div>
+        <h3>Ask a question to {{adressant.first_name}}</h3>
+        <br/>
+    </div>
+        <form method='POST'>
+            {% csrf_token %}
+            <div class='ui container'>
+                <div>
+                    {{form.body}}
+                </div>
+                <div>
+                    <input type='submit' class='ui button' value='Ask a question'>
+                </div>
+            </div>
+        </form>
+</div>
+{% endif %}
+{% endblock content %}

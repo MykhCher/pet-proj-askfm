@@ -1,0 +1,31 @@
+{% load static %}
+<div id='footer' class="ui inverted vertical footer segment">
+    <div class='ui grid'>
+        
+        <div class="eight column row">
+            <div class="column">
+                <a href='https://www.facebook.com/profile.php?id=100080199020752'>
+                    <img src={% static 'logo/fb.png' %} style='max-height: 40px; max-width: 40px'>
+                </a>
+                <a href='#'>
+                    <img src={% static 'logo/twitter.png' %} style='max-height: 68px; max-width: 68px'>
+                </a>
+            </div>
+            <div class="column"></div>
+            <div class="column">Mykhailo Chernov Pet Project <br /> 2022</div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column">
+                <a href='#'>Git Hub Repo</a>
+            </div>
+            <div class="column">
+                <a href='{% url 'edit_profile' %}'>{{request.user.first_name}} {{request.user.last_name}}</a>
+            </div>
+        </div>
+
+        <div class="ui container">
+            
+        </div>
+    </div>
+</div>

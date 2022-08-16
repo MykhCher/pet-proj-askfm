@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='ui two column centered grid'>
+    <form method="post" action='' />
+        {% csrf_token %}
+        <div>
+            Email: <br />
+            {{ form.email }}
+        </div>
+        <div>
+            First name: <br />
+            {{ form.first_name }}
+        </div>
+        <div>
+            Lasе name: <br />
+            {{ form.last_name }}
+        </div>
+        <div>
+            Occupation: <br />
+            {{ form.town }}
+        </div>
+        <div>
+            Birth Date: <br />
+            {{ form.birth_date }}
+        </div>
+        <div>
+            Password: <br />
+            {{ form.password1 }}
+        </div>
+        <div>
+            Confirm your password: <br />
+            {{ form.password2 }}
+        </div>
+        <br />
+        <input type="submit" value="Register" class='ui button'>
+    </form>
+</div>
+
+{% endblock content %}

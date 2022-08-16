@@ -1,0 +1,9 @@
+from django.urls import path
+from .views import AnswerList, QuestionDetail, QuestCreate, QuestList
+
+urlpatterns = [
+    path('', AnswerList.as_view(), name='home'),
+    path('question/<int:index>', QuestionDetail.as_view(), name='quest_detail'),
+    path('create/<int:adressant_id>', QuestCreate.as_view(), name='quest_create'),
+    path('quest_list/<int:profile_id>', QuestList.as_view(), name='quest_list')
+]

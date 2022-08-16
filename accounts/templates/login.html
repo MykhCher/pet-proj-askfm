@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='ui two column centered grid'>
+    <form method='POST'>
+        {% csrf_token %}
+        <div>
+            Email:
+        </div>
+        <div>
+            {{ form.username }}
+        </div>
+        <div>
+            Password:
+        </div>
+        <div>
+            {{form.password}}
+        </div>
+        <br />
+        <div>
+            <input type='submit' value='Sign in' class='ui button' />
+        </div>
+        <br />
+        <div>
+            <p> You don't have an account yet? Then you can 
+                <a href={% url 'register' %}>
+                    create
+                </a> one!
+    </form>
+</div>
+{% endblock content %}
