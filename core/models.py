@@ -17,3 +17,16 @@ class Answer(models.Model):
     question = models.ForeignKey(Question, related_name="answers", on_delete=models.CASCADE, null=True, blank=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='likes')
+
+    def comments_count(self):
+        return self.comments.count()
+
+    def likes_count(self):
+        return self.likes.count()
+
+class Comment(models.Model):
+    body = models.CharField(max_length=250)
+    author=models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    answer=models.ForeignKey(Answer, related_name='comments', on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)

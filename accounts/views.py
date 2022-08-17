@@ -87,7 +87,6 @@ class LoginFormView(FormView):
 
     def form_valid(self, form):
         self.user = form.get_user()
-        print(self.user)
         login(self.request, self.user)
         return super().form_valid(form)
 
