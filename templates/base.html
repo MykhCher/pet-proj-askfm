@@ -20,14 +20,19 @@
             bottom: 0;
             box-shadow: 0 50vh 0 50vh rgba(0,0,0,.87);
         }
+        #site-content{
+            margin: 15px;
+        }
     </style>
 </head>
 <body>
     {% include 'header.html' %}
+    <div id='site-content'>
     {% block content %}
     <p>Welcome to Ask.fm site! </p>
     
     {% endblock content %}
+    </div>
     <br/>
     <br/>
     <br/>
