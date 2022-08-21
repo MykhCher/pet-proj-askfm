@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class='ui warning message'>
+        {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
     <div class='ui four column centered grid'>
         <div class='column'>
             <div><h3>{{profile.email}}</h3></div>

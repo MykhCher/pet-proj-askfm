@@ -11,6 +11,9 @@ class Question(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f'{self.body}'
+
 
 class Answer(models.Model):
     author = models.ForeignKey(User, related_name="answer", on_delete=models.CASCADE, null=True, blank=True)
@@ -18,6 +21,9 @@ class Answer(models.Model):
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes')
+
+    def get_author_name(self):
+        return f'{self.author.first_name} {self.author.last_name}'
 
     def comments_count(self):
         return self.comments.count()

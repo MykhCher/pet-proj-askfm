@@ -69,6 +69,10 @@ class RegisterFormView(FormView):
     success_url = reverse_lazy('success')
     template_name = "register.html"
 
+    def form_invalid(self, form):
+        messages.error(self.request, form.errors)
+        return redirect('register')
+
     def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = False
@@ -122,6 +126,7 @@ class EditProfileView(FormView):
         form = self.form_class(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.add_message(self.request, messages.SUCCESS, message='User profile info successfully altered!')
             return redirect('profile/'+str(user.id))
 
 class CheckProfileView(View):

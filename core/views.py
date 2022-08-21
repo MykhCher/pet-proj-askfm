@@ -1,4 +1,3 @@
-from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
@@ -6,6 +5,7 @@ from .models import Answer, Question
 from .forms import AnswerCreateForm, QuestionCreateForm
 from django.urls import reverse, reverse_lazy
 from django.core.paginator import Paginator
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 
@@ -56,6 +56,9 @@ class QuestCreate(FormView):
     User = get_user_model()
 
     def get(self, request, adressant_id):
+        if not self.request.user.is_authenticated:
+            messages.add_message(request, messages.ERROR, 'You must sign in to ask a question')
+            return redirect('http://127.0.0.1:8000/account/profile/'+str(adressant_id)) 
         adressant = self.User.objects.get(pk=adressant_id)
         form = self.form_class()
         context = {'form': form, 'adressant': adressant}

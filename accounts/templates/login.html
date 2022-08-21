@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class='ui two column centered grid'>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="ui warning message">
+            <div class="header">
+                {{message}}
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
     <form method='POST'>
         {% csrf_token %}
         <div>
