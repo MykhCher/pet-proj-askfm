@@ -22,8 +22,14 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes')
 
+    def get_question(self):
+        return f'{self.question.body}'
+
     def get_author_name(self):
         return f'{self.author.first_name} {self.author.last_name}'
+
+    def get_author_status(self):
+        return self.author.status
 
     def comments_count(self):
         return self.comments.count()

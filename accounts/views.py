@@ -1,3 +1,4 @@
+from re import template
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, get_user_model, logout
@@ -91,6 +92,12 @@ class LoginFormView(FormView):
 
     def form_valid(self, form):
         self.user = form.get_user()
+        if self.user.status == 'b':
+            return render(self.request,
+                          template_name='blocked.html',
+                          context={
+                            'body': 'The user was blocked.'
+                          })
         login(self.request, self.user)
         return super().form_valid(form)
 
@@ -134,6 +141,12 @@ class CheckProfileView(View):
     User = get_user_model()
     def get(self, request, profile_id):
         profile = self.User.objects.get(pk=profile_id)
+        if profile.status == 'b':
+            return render(self.request,
+                          template_name='blocked.html',
+                          context={
+                            'body': 'The user was blocked.'
+                          })
         context = {'profile': profile}
         return render(request, self.template_name, context=context)
     

@@ -13,6 +13,9 @@ class AnswerList(View):
     def get(self, request):
         
         answers = Answer.objects.get_queryset().order_by('-id')
+        for i in answers:
+            if i.author.status == 'b':
+                answers = answers.exclude(pk=i.pk)
         paginator = Paginator(answers, 8)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)

@@ -1,0 +1,50 @@
+{% extends 'admin/change_list.html' %}
+
+{% block content_title %}
+<h1>Ask.fm Dashboard<h1>
+{% endblock content_title %}
+
+{% block result_list %}
+<div class='results'>
+    <table>
+        
+        <thead>
+            <tr>
+            <th>
+                <div class=”text”>
+                <a href=”#”>List</a>
+                </div>
+            </th>
+            <th>
+                <div class=”text”>
+                <a href=”#”>Total</a>
+                </div>
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row1">
+              <td> Register users </td>
+              <td> {{ users }} </td>
+            </tr>
+            <tr class="row2">
+              <td> Register users for last week </td>
+              <td> {{ week_users }} </td>
+            </tr>
+            <tr class="row1">
+              <td> Questions </td>
+              <td> {{ quests }} </td>
+            </tr>
+            <tr class="row2">
+              <td> Answers </td>
+              <td> {{ answers }} </td>
+            </tr>
+            <tr class="row1">
+              <td> Comments </td>
+              <td> {{ comments }} </td>
+            </tr>
+        </tbody>
+      
+    </table>
+</div>
+{% endblock result_list %}

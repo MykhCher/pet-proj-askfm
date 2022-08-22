@@ -3,6 +3,11 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
 from django.contrib.auth.base_user import BaseUserManager
 
+STATUS_CHOICES = [
+    ('a', 'Active'),
+    ('b', 'Blocked')
+]
+
 class CustomUserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -43,6 +48,7 @@ class User(AbstractUser):
                                  auto_now_add=False,
                                  blank=True, 
                                  null=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='a')
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
