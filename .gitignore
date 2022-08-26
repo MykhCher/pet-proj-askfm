@@ -20,6 +20,12 @@ media
 # AWS User-specific
 .idea/**/aws.xml
 
+# virtualenv
+env
+
+# Docker db
+data
+
 # Generated files
 .idea/**/contentModel.xml
 
