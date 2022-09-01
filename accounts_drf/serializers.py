@@ -10,14 +10,16 @@ class LoginSerializer(serializers.ModelSerializer):
             'password' : {'write_only': True}
         }
 class AnswerListSerializer(serializers.ModelSerializer):
+    author = serializers.StringRelatedField(
+        many=False, read_only=True
+    )
+    question = serializers.SlugRelatedField(
+         many=False, read_only=True, slug_field='body'
+     )
+    
     class Meta:
         model = Answer
-        fields = ['body','id', 'created_at', 'likes_count']
-        read_only_fields = [
-            'created_at',
-            'id',
-            'likes_count'
-        ]
+        fields = ['question', 'body', 'author']
 
 class AnswererListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,15 +28,18 @@ class AnswererListSerializer(serializers.ModelSerializer):
         read_only_fields = ['answer_count']
 
 class AnswerDetailSerializer(serializers.ModelSerializer):
-    # question = serializers.SlugRelatedField(
-    #     many=True, read_only=True, slug_field='body'
-    # )
-    # author = serializers.StringRelatedField(
-    #     many=True
-    # )
+    question = serializers.SlugRelatedField(
+         many=False, read_only=True, slug_field='body'
+     )
+    comments = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field='body'
+    )
+    author = serializers.StringRelatedField(
+        many=False, read_only=True
+    )
     class Meta:
         model = Answer
-        fields = [ 'id', 'body', 
+        fields = [ 'id', 'author', 'question', 'body', 'comments',
                  'comments_count', 'likes_count']
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -49,3 +54,14 @@ class CommentSerializer(serializers.ModelSerializer):
             comment = Comment(author=author, answer_id=answer_id, body=body)
             comment.save()
             return validated_data
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'birth_date', 'town']
+        read_only_fields = ['first_name', 'last_name', 'birth_date', 'town']
+
+class QuestionCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Question
+        fields = ['body']
