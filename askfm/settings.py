@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,8 +34,8 @@ AUTH_USER_MODEL = 'accounts.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True  
 EMAIL_HOST = 'smtp.gmail.com'  
-EMAIL_HOST_USER = 'micher1240@gmail.com'  
-EMAIL_HOST_PASSWORD = 'cljjmuowqbwnwbhi'  
+EMAIL_HOST_USER = 'petaskfm1102@gmail.com'  
+EMAIL_HOST_PASSWORD = 'yzwskaxjlzwxwong'
 EMAIL_PORT = 587 
 
 # Application definition
@@ -100,6 +101,9 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+if 'test' in sys.argv or 'test\_coverage' in sys.argv: #Covers regular testing and django-coverage
+    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+    DATABASES['default']['NAME'] = ':memory:'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

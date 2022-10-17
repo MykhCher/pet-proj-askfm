@@ -180,10 +180,21 @@ class QuestionCreateView(CreateAPIView):
     def create(self, request, pk):
         question = self.get_object()
         data = request.data
-        question.author = User.objects.get(pk=self.request.user.pk)
-        question.body = data['body']
-        question.addressant = User.objects.get(pk=pk)
-        serializer = self.serializer_class(question, data)
-        serializer.is_valid()
-        serializer.save()
+        if self.request.user.pk != pk:
+            question.author = User.objects.get(pk=self.request.user.pk)
+            question.body = data['body']
+            question.id = Question.objects.all().count() + 1
+            question.addressant = User.objects.get(pk=pk)
+            serializer = self.serializer_class(question, data)
+            serializer.is_valid()
+            serializer.save()
+        else:
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={
+                    'status': '403_FORBIDDEN',
+                    'message': "Cannot create a question to yourself"
+                    
+                }
+            )
         return Response(serializer.data)

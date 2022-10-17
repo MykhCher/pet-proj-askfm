@@ -1,7 +1,6 @@
-from re import template
 from django.core.mail import EmailMessage
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, get_user_model, logout
+from django.contrib.auth import login, get_user_model, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
 from django.views import View
@@ -10,7 +9,6 @@ from django.urls import reverse, reverse_lazy
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
-from validate_email import validate_email
 from .forms import UserCreateForm, CustomAuthencticationForm, ProfileEditForm
 from .token import account_activation_token
 

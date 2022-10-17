@@ -64,4 +64,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 class QuestionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model=Question
-        fields = ['body']
+        fields = ['body', 'id']

@@ -1,13 +1,19 @@
+from urllib import response
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import FormView
-from .models import Answer, Question
-from .forms import AnswerCreateForm, QuestionCreateForm
 from django.urls import reverse, reverse_lazy
-from django.core.paginator import Paginator
+
 from django.contrib import messages
 from django.contrib.auth import get_user_model
-from django.contrib.sites.shortcuts import get_current_site
+
+from rest_framework import status
+
+from .models import Answer, Question
+from .forms import AnswerCreateForm, QuestionCreateForm
+
+User = get_user_model()
 
 class AnswerList(View):
     def get(self, request):
@@ -56,12 +62,15 @@ class QuestCreate(FormView):
     form_class = QuestionCreateForm
     template_name = 'quest_create.html'
     success_url = reverse_lazy('home')
-    User = get_user_model()
 
     def get(self, request, adressant_id):
         if not self.request.user.is_authenticated:
             messages.add_message(request, messages.ERROR, 'You must sign in to ask a question')
-            return redirect('http://127.0.0.1:8000/account/profile/'+str(adressant_id)) 
+            url = reverse("check_profile", kwargs={'profile_id': adressant_id})
+            response = redirect(url)
+            response.status_code = status.HTTP_405_METHOD_NOT_ALLOWED
+            return redirect(url)
+            # return redirect('http://127.0.0.1:8000/account/profile/'+str(adressant_id)) 
         adressant = self.User.objects.get(pk=adressant_id)
         form = self.form_class()
         context = {'form': form, 'adressant': adressant}
@@ -76,8 +85,17 @@ class QuestCreate(FormView):
         return super().form_valid(form)
 
 class QuestList(View):
+
     def get(self, request, profile_id):
-        user=get_user_model().objects.get(pk=profile_id)
+        if self.request.user is None or self.request.user.pk != profile_id:
+            response = render(self.request,
+                          template_name='blocked.html',
+                          context={
+                            'body': '404 Not Found :('
+                          })
+            response.status_code = status.HTTP_404_NOT_FOUND
+            return response
+        user=User.objects.get(pk=profile_id)
         questions = Question.objects.get_queryset().filter(adressant=user).order_by('-id')
         paginator = Paginator(questions, 5)
         page_number = request.GET.get('page')
