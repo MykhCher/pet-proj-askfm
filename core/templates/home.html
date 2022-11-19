@@ -10,9 +10,9 @@
 </form>
 <div class="ui two column centered grid">
     <div class="four column centered row">
-        <div class="column">
+        <div class="column" id='answers'>
             {% if not page_obj %}
-            there are no answers yet
+            There are no answers yet
             {% endif %}
           
               {% for ans in page_obj %}
@@ -25,7 +25,29 @@
                         </div>
                     </div>
                     <div class='extra content'>
-                        {{ans.created_at}}
+                        <div>
+                            <a href={% url 'quest_detail' ans.question.id %}>Answer details</a>
+                        </div>
+                        <div>
+                            {{ans.created_at}}
+                        </div>
+                    </div>
+                    <div class='extra content'>
+                        <form method='POST' action={% url 'like_answer' %} id="answer_like">
+                            {% csrf_token %}
+                            <div class="ui labeled button" tabindex="0">
+                                {% if request.user in ans.likes.all %}
+                                <button type='submit' name='answer_id' id='like_button' value="{{ans.id}}" class="ui red button">
+                                {% else %}
+                                <button type='submit' name='answer_id' id='like_button' value="{{ans.id}}" class="ui button">
+                                {% endif %}
+                                    <i class="heart icon"></i> Like
+                                </button>
+                                <a class="ui basic label" id="likes_count">
+                                    {{ans.likes_count}}
+                                </a>
+                            </div>
+                        </form>
                     </div>
                 </div>  
                   <br />

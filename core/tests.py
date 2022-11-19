@@ -1,8 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from rest_framework import status
-
 from accounts.models import User
 from core.models import Question
 
@@ -28,20 +26,20 @@ class QuestionCreateTest(TestCase):
         self.client.force_login(self.user2)
         url = reverse('quest_detail', kwargs={'index': question_id})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, 200)
 
     def test_question_create_un_auth(self):
         url = reverse('quest_create', kwargs={'adressant_id': self.user1.pk})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertEqual(response.status_code, 404)
 
     def test_question_list_auth(self):
         self.client.force_login(self.user1)
         url = reverse('quest_list', kwargs={'profile_id': self.user1.pk})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, 200)
 
     def test_question_list_un_auth(self):
         url = reverse('quest_list', kwargs={'profile_id': self.user1.pk})
         response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, 404)

@@ -5,7 +5,7 @@ from .views import AnswerGet, AnswerDetail, AnswererList, ProfileView, QuestionC
 
 urlpatterns= [
     path("login", obtain_auth_token),
-    path('answer-detail/<int:pk>', AnswerDetail.as_view()),
+    path('answer-detail/<int:pk>/', AnswerDetail.as_view()),
     path('question_create/<int:pk>/', QuestionCreateView.as_view()),
 ]
 
