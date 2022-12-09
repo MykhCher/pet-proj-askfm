@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class='ui two column centered grid'>
+
+        {% for answer in page_obj %}
+        <div>
+            <h3>{{answer.question.author}}'s Question: </h3>
+            {{answer.question.body}}
+        </div>
+        <div>
+            <h3>{{answer.author}}'s Answer: </h3>
+            {{answer.body}}
+        </div>
+        {% endfor %}
+
+    </div>
+{% endblock content %}

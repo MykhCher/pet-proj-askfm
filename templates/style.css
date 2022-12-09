@@ -1,0 +1,14 @@
+
+#footer{
+    bottom: 0;
+    box-shadow: 0 50vh 0 50vh rgba(0,0,0,.87);
+}
+
+img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+#site-content{
+    margin: 15px;
+}

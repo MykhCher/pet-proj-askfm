@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+{{profile.first_name}} {{profile.last_name}}
+{% endblock title %}
+
 {% block content %}
 {% if messages %}
     {% for message in messages %}
@@ -32,7 +36,7 @@
                 </div>
                 <br/>
                 <div>
-                    <a href='#' class='ui button'>
+                    <a href='{% url 'answers-by-user' profile.id %}' class='ui button'>
                         List of {{profile.first_name}}'s answers
                     </a>
                 </div>

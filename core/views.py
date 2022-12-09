@@ -1,7 +1,9 @@
+from datetime import datetime
+
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 
@@ -109,12 +111,27 @@ class QuestList(View):
 
 def like_view(request):
     if request.method == 'POST':
-        print(request.POST.get('answer_id'))
         answer = get_object_or_404(Answer, id=request.POST.get('answer_id'))
+
+        if not request.user.is_authenticated:
+            messages.add_message(request, messages.ERROR, 'Sign in to like answers')
+            return HttpResponseRedirect(reverse('home'))
         
         if answer.likes.filter(id=request.user.id).exists():
             answer.likes.remove(request.user)
         else:
             answer.likes.add(request.user)
     return HttpResponseRedirect(reverse('home'))
+
+    
+class AnswerByUser(ListView):
+    model = Answer
+    paginate_by = 6
+
+    def get(self, request, profile_id, **kwargs):
+        self.queryset = self.model.objects.filter(author_id=profile_id)
+        self.object_list = self.get_queryset()
+        context = super().get_context_data(**kwargs)
+        context['now'] = datetime.now()
+        return render(request, template_name='answerbyuser.html', context=context)
     
