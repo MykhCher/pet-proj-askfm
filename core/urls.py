@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AnswerList, QuestionDetail, QuestCreate, QuestList, like_view, AnswerByUser
+from .views import AnswerList, QuestionDetail, QuestCreate, QuestList, like_view, AnswerByUser, UserList
 
 urlpatterns = [
     path('', AnswerList.as_view(), name='home'),
@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/<int:adressant_id>', QuestCreate.as_view(), name='quest_create'),
     path('quest_list/<int:profile_id>', QuestList.as_view(), name='quest_list'),
     path('like/', like_view, name='like_answer'),
-    path('answers/<int:profile_id>', AnswerByUser.as_view(), name='answers-by-user')
+    path('answers/<int:profile_id>', AnswerByUser.as_view(), name='answers-by-user'),
+    path('users', UserList.as_view(), name='userlist'),
 ]

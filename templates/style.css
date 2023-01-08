@@ -1,7 +1,8 @@
 
+
 #footer{
     bottom: 0;
-    box-shadow: 0 50vh 0 50vh rgba(0,0,0,.87);
+    box-shadow: 0 50vh 0 50vh rgba(0,0,1,.89);
 }
 
 img {
@@ -10,5 +11,5 @@ img {
 }
 
 #site-content{
-    margin: 15px;
+    margin: 40px;
 }

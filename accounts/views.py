@@ -86,7 +86,12 @@ class LoginFormView(FormView):
     template_name = 'login.html'
 
     def form_invalid(self, form):
-        return redirect('reminder')
+        body = form.errors['__all__']
+        return render(self.request,
+                          template_name='blocked.html',
+                          context={
+                            'body': body
+                          })
 
     def form_valid(self, form):
         self.user = form.get_user()

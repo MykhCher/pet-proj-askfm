@@ -5,6 +5,9 @@
             <img src={% static 'logo/favicon.png' %}>
         </a>
         <div class='right item'>
+            <a class='ui button' href={% url 'userlist' %}>List of Users</a>
+        </div>
+        <div class='right item'>
             {% if request.user.is_authenticated %}
                 <div class="ui compact menu">
                     <div class="ui simple dropdown item">

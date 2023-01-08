@@ -112,16 +112,18 @@ class QuestList(View):
 def like_view(request):
     if request.method == 'POST':
         answer = get_object_or_404(Answer, id=request.POST.get('answer_id'))
-
+        success_url = request.POST["url"]
+        print(request.POST)
+        print(redirect(request.POST["url"]))
         if not request.user.is_authenticated:
             messages.add_message(request, messages.ERROR, 'Sign in to like answers')
-            return HttpResponseRedirect(reverse('home'))
+            return redirect(success_url)
         
         if answer.likes.filter(id=request.user.id).exists():
             answer.likes.remove(request.user)
         else:
             answer.likes.add(request.user)
-    return HttpResponseRedirect(reverse('home'))
+    return redirect(success_url)
 
     
 class AnswerByUser(ListView):
@@ -133,5 +135,12 @@ class AnswerByUser(ListView):
         self.object_list = self.get_queryset()
         context = super().get_context_data(**kwargs)
         context['now'] = datetime.now()
+        context['answer_user'] = User.objects.get(pk=profile_id)
         return render(request, template_name='answerbyuser.html', context=context)
     
+class UserList(ListView):
+    allow_empty = True
+    model = User
+    paginate_by = 6
+    paginator_class = Paginator
+    template_name = "userlist.html"

@@ -1,17 +1,63 @@
 {% extends 'base.html' %}
+{% block title %} {{ answer_user }}'s Answers | {% endblock title %}
 {% block content %}
     <div class='ui two column centered grid'>
 
-        {% for answer in page_obj %}
-        <div>
-            <h3>{{answer.question.author}}'s Question: </h3>
-            {{answer.question.body}}
+        <div class='four column center row'>
+            <div class='column'>
+                {% if not page_obj %} <br />
+                <h3>There are no answers yet :(</h3>
+                <p>Maybe you want to check out whether someone asked you some important question :)</p>
+                <a class='ui secondary button' href='{% url 'quest_list' request.user.pk %}'>Questions to you</a>
+                {% endif %}
+                
+                {% for answer in page_obj %}
+                <div class='ui card'>
+
+                    <div class="content">
+                        <div class="header">{{answer.question.body}}</div>
+                        <div class="meta">
+                            <a href="{% url 'check_profile' answer.question.author.id %}">{{answer.question.author}} </a>
+                        </div> 
+                        <div class="meta">Answer by: 
+                            <a href={% url 'check_profile' answer.author.id %}>{{answer.author}}</a>
+                        </div>
+                        <div class="description">{{answer.body}}</div>
+                    </div>
+
+                    
+                    <div class='extra content'>
+                        <div>
+                            <a href={% url 'quest_detail' answer.question.id %}>Answer details</a>
+                        </div>
+                        <div>
+                            {{answer.created_at}}
+                        </div>
+                        <br />
+                        <div>
+                            <form method='POST' action={% url 'like_answer' %} id="answer_like">
+                                {% csrf_token %}
+                                <div class="ui labeled button" tabindex="0">
+                                    {% if request.user in answer.likes.all %}
+                                    <button type='submit' name='answer_id' value="{{answer.id}}" class="ui red button">
+                                    {% else %}
+                                    <button type='submit' name='answer_id' value="{{answer.id}}" class="ui button">
+                                    {% endif %}
+                                    <input type="hidden" name="url" value={{request.path}}>
+                                        <i class="heart icon"></i> Like
+                                    </button>
+                                    <a class="ui basic label" id="likes_count">
+                                        {{answer.likes_count}}
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
         </div>
-        <div>
-            <h3>{{answer.author}}'s Answer: </h3>
-            {{answer.body}}
-        </div>
-        {% endfor %}
 
     </div>
 {% endblock content %}

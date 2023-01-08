@@ -3,16 +3,17 @@
 <div class="ui items">
     <div class="item">
         <div class="content">
-        <a class="header" href='{% url 'check_profile' quest.author.id %}'>{{quest.author}}</a>
-        <div class='meta'>
-            <h3>{{quest.title}}</h3>
-        </div>
-        <div class="description">
-            <span>{{quest.body}}</span>
-        </div>
-        <div class="extra">
-            Posted : {{quest.created_at}}
-        </div>
+            <a class="header" href='{% url 'check_profile' quest.author.id %}'>{{quest.author}}</a>
+            <div class='meta'>
+                <h3>{{quest.title}}</h3>
+            </div>
+            <div class="description">
+                <span>{{quest.body}}</span>
+            </div>
+            <div class="extra">
+                Posted : {{quest.created_at}}
+            </div>
+            
         </div>
     </div>
 </div>
@@ -59,5 +60,22 @@
         </div>
     </div>
 </div>
+
+<form method='POST' action={% url 'like_answer' %} id="answer_like">
+    {% csrf_token %}
+    <div class="ui labeled button" tabindex="0">
+        {% if request.user in ans.likes.all %}
+        <button type='submit' name='answer_id' value="{{ans.id}}" class="ui red button">
+        {% else %}
+        <button type='submit' name='answer_id' value="{{ans.id}}" class="ui button">
+        {% endif %}
+        <input type="hidden" name="url" value={{request.path}}>
+            <i class="heart icon"></i> Like
+        </button>
+        <p class="ui basic label" id="likes_count">
+            {{ans.likes_count}}
+        </p>
+    </div>
+</form>
 {% endfor %}
 {% endblock content %}

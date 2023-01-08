@@ -22,7 +22,7 @@
     <div class="four column centered row">
         <div class="column" id='answers'>
             {% if not page_obj %}
-            There are no answers yet
+            <h3>There are no answers yet</h3>
             {% endif %}
           
               {% for ans in page_obj %}
@@ -47,10 +47,11 @@
                             {% csrf_token %}
                             <div class="ui labeled button" tabindex="0">
                                 {% if request.user in ans.likes.all %}
-                                <button type='submit' name='answer_id' id='like_button' value="{{ans.id}}" class="ui red button">
+                                <button type='submit' name='answer_id' value="{{ans.id}}" class="ui red button">
                                 {% else %}
-                                <button type='submit' name='answer_id' id='like_button' value="{{ans.id}}" class="ui button">
+                                <button type='submit' name='answer_id' value="{{ans.id}}" class="ui button">
                                 {% endif %}
+                                <input type="hidden" name="url" value={{request.path}}>
                                     <i class="heart icon"></i> Like
                                 </button>
                                 <a class="ui basic label" id="likes_count">
