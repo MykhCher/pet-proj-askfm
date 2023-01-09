@@ -5,19 +5,47 @@
 
 {% comment %} user profiles block {% endcomment %}
 
-{% for obj in page_obj %}
-<div class='ui two column centered grid'>
-    <div>
-        <br />
-            <h3>
-                {{obj.first_name}} {{obj.last_name}}
-                {% if obj.id == request.user.id %} (you) {% endif %}
-            </h3> 
-            <a href={% url 'check_profile' obj.id %}> Check profile </a>
-        <br />
-    </div>
-</div>
+<div class="ui eight column grid">
+    {% for obj in page_obj %}
+        {% if obj.id|divisibleby:2 %}
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column"></div>
+            <div class="column">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">
+                            {{obj.first_name}} {{obj.last_name}}
+                            {% if obj.id == request.user.id %} (you) {% endif %}
+                        </div>
+                        <div class="meta">{{obj.email}} &#13;&#10 Occupation: {{obj.town}}</div>
+                        <div class="subheader">  
+                            <a href={% url 'check_profile' obj.id %}> Check profile </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <div class="column">
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">
+                        {{obj.first_name}} {{obj.last_name}}
+                        {% if obj.id == request.user.id %} (you) {% endif %}
+                    </div>
+                    <div class="meta">{{obj.email}} &#13;&#10 Occupation: {{obj.town}}</div>
+                    <div class="subheader">  
+                        <a href={% url 'check_profile' obj.id %}> Check profile </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        {% endif %}
     {% endfor %}
+</div>
 <br />
 <br />
 <br />

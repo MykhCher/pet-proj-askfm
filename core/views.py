@@ -4,8 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import FormView, ListView
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 from django.contrib import messages
 from django.contrib.auth import get_user_model
@@ -113,8 +112,6 @@ def like_view(request):
     if request.method == 'POST':
         answer = get_object_or_404(Answer, id=request.POST.get('answer_id'))
         success_url = request.POST["url"]
-        print(request.POST)
-        print(redirect(request.POST["url"]))
         if not request.user.is_authenticated:
             messages.add_message(request, messages.ERROR, 'Sign in to like answers')
             return redirect(success_url)
@@ -138,9 +135,19 @@ class AnswerByUser(ListView):
         context['answer_user'] = User.objects.get(pk=profile_id)
         return render(request, template_name='answerbyuser.html', context=context)
     
+
 class UserList(ListView):
     allow_empty = True
     model = User
-    paginate_by = 6
+    ordering = ['-id']
+    paginate_by = 8
     paginator_class = Paginator
     template_name = "userlist.html"
+
+    def get(self, request, *args, **kwargs):
+        # handling search results via overriding ListView.get() method.
+        if "search" in request.GET:
+            search_result = request.GET["search"]
+            new_context = self.model.objects.filter(first_name__icontains=search_result)
+            self.object_list = new_context
+        return super().get(request, *args, **kwargs)

@@ -6,9 +6,14 @@
         <div class='four column center row'>
             <div class='column'>
                 {% if not page_obj %} <br />
-                <h3>There are no answers yet :(</h3>
-                <p>Maybe you want to check out whether someone asked you some important question :)</p>
-                <a class='ui secondary button' href='{% url 'quest_list' request.user.pk %}'>Questions to you</a>
+                    <h3>There are no answers yet :(</h3>
+                    {% if request.user.pk == answer_user.pk %}
+                        <p>Maybe you want to check out whether someone asked you some important question :)</p>
+                        <a class='ui secondary button' href='{% url 'quest_list' request.user.pk %}'>Questions to you</a>
+                    {% else %}
+                        <p>Maybe your exact question will be the first for {{answer_user.first_name}} to be answered!</p>
+                        <a class='ui primary button' href='{% url 'quest_create' answer_user.pk %}'>Ask a question</a>
+                    {% endif %}
                 {% endif %}
                 
                 {% for answer in page_obj %}

@@ -3,6 +3,7 @@
 #footer{
     bottom: 0;
     box-shadow: 0 50vh 0 50vh rgba(0,0,1,.89);
+    margin: 10px;
 }
 
 img {
