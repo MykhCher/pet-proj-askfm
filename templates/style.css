@@ -14,3 +14,11 @@ img {
 #site-content{
     margin: 40px;
 }
+
+#userlist_grid {
+    padding: 10px;
+}
+
+#logout_text {
+    color: rgb(148, 28, 28);
+}

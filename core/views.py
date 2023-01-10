@@ -147,7 +147,27 @@ class UserList(ListView):
     def get(self, request, *args, **kwargs):
         # handling search results via overriding ListView.get() method.
         if "search" in request.GET:
+            self.object_list = self.get_queryset()
+            allow_empty = self.get_allow_empty()
             search_result = request.GET["search"]
-            new_context = self.model.objects.filter(first_name__icontains=search_result)
-            self.object_list = new_context
+            added_list = list()
+            print(request.GET)
+            for user in self.get_queryset():
+                fn = user.first_name
+                ln = user.last_name
+                email = user.email
+
+                fn_prestate = search_result in fn or search_result in fn.lower() or search_result in fn.upper()
+                ln_prestate = search_result in ln or search_result in ln.lower() or search_result in ln.upper()
+                email_prestate = search_result in email or search_result in email.lower() or search_result in email.upper()
+
+                fn_state = fn_prestate and request.GET.get('first_name') == 'on'
+                ln_state = ln_prestate and request.GET.get('last_name') == 'on'
+                email_state = email_prestate and request.GET.get('email') == 'on'
+                
+                if fn_state or ln_state or email_state:
+                    added_list.append(user)
+                context = self.get_context_data(object_list=added_list)
+                
+            return self.render_to_response(context)
         return super().get(request, *args, **kwargs)

@@ -17,7 +17,7 @@
                             <a class='item' href='{% url 'edit_profile' %}'>Edit profile</a>
                             <a class='item' href='{% url 'check_profile' request.user.pk %}'>Check profile</a>
                             <a class='item' href='{% url 'quest_list' request.user.pk %}'>Questions to you</a>
-                            <a class='item' href='{% url 'logout' %}'><div class="ui red empty circular label"></div>Sign out</a>
+                            <a class='item' href='{% url 'logout' %}'><p id="logout_text"><b>Sign out</b></p></a>
                             </div>
                         </div>
                     </div>
