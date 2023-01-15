@@ -145,10 +145,9 @@ class UserList(ListView):
     template_name = "userlist.html"
 
     def get(self, request, *args, **kwargs):
-        # handling search results via overriding ListView.get() method.
+        """Handling search results via overriding `ListView.get()` method."""
         if "search" in request.GET:
             self.object_list = self.get_queryset()
-            allow_empty = self.get_allow_empty()
             search_result = request.GET["search"]
             added_list = list()
             print(request.GET)
