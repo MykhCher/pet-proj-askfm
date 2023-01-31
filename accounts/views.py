@@ -114,6 +114,10 @@ class EditProfileView(FormView):
     template_name='edit_profile.html'
 
     def get(self, request):
+        if not self.request.user.is_authenticated:
+            response = render(self.request, "blocked.html", {'body' : "404 Not Found"})
+            response.status_code = 404
+            return response
         user = self.request.user
         initial = {
             'first_name': user.first_name,
@@ -152,7 +156,3 @@ class CheckProfileView(View):
                           })
         context = {'profile': profile}
         return render(request, self.template_name, context=context)
-    
-            
-
-        

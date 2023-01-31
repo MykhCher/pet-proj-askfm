@@ -3,7 +3,6 @@ from django.urls import reverse
 
 from accounts.models import User
 from core.models import Question, Answer
-from core.forms import AnswerCreateForm
 
 
 class QuestionCreateTest(TestCase):
@@ -82,10 +81,8 @@ class QuestionCreateTest(TestCase):
     def test_question_create(self):
         """
         Consists of two parts: 
-        \n \t
         1. Check whether `You must sign in to ask a question` message is shown when we try to visit 
         `quest_create` page with no user authenticated
-        \n \t
         2. Authencticating as one of the test users and asking a question to another test user.
         """
         #first part: unauth
